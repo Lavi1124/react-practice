@@ -1,36 +1,37 @@
 import { useState } from "react";
 
 function App() {
-  const [count, setCount] = useState(0);
-  function increase() {
-    setCount((prev) => prev + 1);
+  const [todos, setTodos] = useState([]);
+  const [text, setText] = useState("");
+  function addTodo() {
+    if (text.trim() === "") return;
+    setTodos((prev) => [...prev, text]);
+    setText("");
   }
-
-  function decrease() {
-    setCount((prev) => prev - 1);
-  }
-
-  function reset() {
-    setCount(0);
-  }
-
   return (
     <div className="container">
-      <h1>Counter App</h1>
-      <p>Current Count: {count}</p>
-      <div className="buttons">
-        <button onClick={increase}>Increase</button>
-        <button onClick={decrease}>Decrease</button>
-        <button onClick={reset}>Reset</button>
-        <button
-          onClick={() => {
-            setCount((prev) => prev + 1);
-            setCount((prev) => prev + 1);
-          }}
-        >
-          Increase Twice
-        </button>
-      </div>
+      <h1>To-Do App</h1>
+      <input
+        type="text"
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+        placeholder="Enter a task"
+      />
+      <button onClick={addTodo}>Add</button>
+      <ul>
+        {todos.map((todo, index) => (
+          <li>
+            {todo}
+            <button
+              onClick={() => {
+                setTodos((prev) => prev.filter((_, i) => i !== index));
+              }}
+            >
+              ❌
+            </button>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }

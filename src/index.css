@@ -67,6 +67,7 @@ button:focus-visible {
   }
   button {
     background-color: #f9f9f9;
+    
   }
 }
 
@@ -83,4 +84,19 @@ button:focus-visible {
   display: flex;
   gap: 12px;
   margin-top: 16px;
+  
+}
+
+input {
+  padding: 8px;
+  margin-right: 8px;
+  
+}
+
+li {
+  margin-top: 8px;
+}
+
+li button {
+  margin-left: 8px;
 }
