@@ -112,3 +112,7 @@ ul {
   border: 1px solid #ddd;
   border-radius: 6px;
 }
+.done {
+  text-decoration: line-through;
+  color: gray;
+}

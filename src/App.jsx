@@ -1,12 +1,39 @@
 import { useState } from "react";
+import TodoItem from "./TodoItem";
 
 function App() {
-  const [todos, setToddos] = useState([]);
+  const [todos, setTodos] = useState([]);
   const [text, setText] = useState("");
+  const [editingId, setEditingId] = useState(null);
+
   function addTodo() {
     if (text.trim() === "") return;
-    setToddos((prev) => [...prev, text]);
+    setTodos((prev) => [
+      ...prev,
+      {
+        id: Date.now(),
+        text: text,
+        completed: false,
+      },
+    ]);
     setText("");
+  }
+  function toggleTodo(id) {
+    setTodos((prev) =>
+      prev.map((todo) =>
+        todo.id === id ? { ...todo, completed: !todo.completed } : todo
+      )
+    );
+  }
+  function deleteTodo(id) {
+    setTodos((prev) => prev.filter((todo) => todo.id !== id));
+  }
+
+  function updateTodo(id, newText) {
+    setTodos((prev) =>
+      prev.map((todo) => (todo.id === id ? { ...todo, text: newText } : todo))
+    );
+    setEditingId(null);
   }
   return (
     <div className="container">
@@ -22,17 +49,13 @@ function App() {
       </div>
 
       <ul>
-        {todos.map((todo, index) => (
-          <li className="todo-item">
-            <span>{todo}</span>
-            <button
-              onClick={() => {
-                setToddos((prev) => prev.filter((_, i) => i !== index));
-              }}
-            >
-              ❌
-            </button>
-          </li>
+        {todos.map((todo) => (
+          <TodoItem
+            key={todo.id}
+            todo={todo}
+            toggleTodo={toggleTodo}
+            deleteTodo={deleteTodo}
+          />
         ))}
       </ul>
     </div>
